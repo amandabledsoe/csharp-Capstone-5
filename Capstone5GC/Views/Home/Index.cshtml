@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@model List<Car>
+
+@foreach(var car in Model)
+{
+    <p>@car.Make</p>
+    <p>@car.Model</p>
+    <p>@car.ModelYear</p>
+    <p>@car.Color</p>
+}
