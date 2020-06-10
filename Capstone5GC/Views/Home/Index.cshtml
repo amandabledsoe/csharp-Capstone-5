@@ -7,12 +7,7 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-@model List<Car>
-
-@foreach(var car in Model)
-{
-    <p>@car.Make</p>
-    <p>@car.Model</p>
-    <p>@car.ModelYear</p>
-    <p>@car.Color</p>
-}
+<form asp-controller="Home" asp-action="Search">
+    <input type="number" name="id" />
+    <input type="submit" />
+</form>

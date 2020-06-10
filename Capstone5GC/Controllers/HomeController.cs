@@ -6,21 +6,33 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Capstone5GC.Models;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Capstone5GC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly CarDAL carDal = new CarDAL();
 
-        public HomeController(ILogger<HomeController> logger)
+        public async Task<IActionResult> Index()
         {
-            _logger = logger;
+            List<Car> cars = await carDal.GetCars();
+            return View(cars);
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Search(int id)
         {
-            return View();
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:44328/");
+
+            var response = await client.GetAsync($"car/{id}.json");
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            Car car = JsonConvert.DeserializeObject<Car>(result);
+
+            return View(car);
         }
 
         public IActionResult Privacy()

@@ -1,22 +1,31 @@
-﻿using Capstone5GC.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Capstone5GC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Capstone5GC.Controllers
 {
-    [Route("api/[controller]/")]
+    [Route("[controller]/")]
     [ApiController]
-    public class CarController : ControllerBase
+    public class CarController : Controller
     {
         private readonly CarDealershipDbContext _context;
+        private readonly CarDAL carDal = new CarDAL();
 
         public CarController(CarDealershipDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<IActionResult> IndexAsync()
+        {
+            List<Car> cars = await carDal.GetCars();
+            return View("Index", cars);
         }
 
         //GET: api/Car
